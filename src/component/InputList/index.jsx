@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 function InputList({ type, total, setTotal }) {
   const [list, setList] = useState([]);
-  const [listItem, setListItem] = useState();
+  const [listItem, setListItem] = useState(0);
   const handleKeyPressEvent = (event) => {
     if (event.key === "Enter") {
       setList([...list, parseFloat(event?.target?.value)]);

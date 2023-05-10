@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 function InputListWithDetails({ type, total, setTotal }) {
   const [list, setList] = useState([]);
-  const [listItem, setListItem] = useState();
+  const [listItem, setListItem] = useState(0);
   const [comment, setComment] = useState("");
   const handleKeyPressEvent = (event) => {
     if (event.key === "Enter" && listItem > 0 && comment) {
