@@ -57,7 +57,7 @@ function Machine({ number }) {
         <span
           style={{ fontSize: "24px", fontStyle: "italic", fontWeight: "bold" }}
         >
-          Total Due: {totalDue}
+          Total Due: {parseFloat(totalDue).toFixed(2)}
         </span>
       </div>
       <MachineForm
@@ -76,6 +76,9 @@ function Machine({ number }) {
         setSale={setTotalHsdSale}
         setPrice={setTotalHsdPrice}
       />
+      <div className="sale-description">
+        <span>{`Total Price : ${totalHsdPrice + totalMsPrice}`}</span>
+      </div>
       <InputList
         key={`paytm-${number}`}
         type={"Paytm"}

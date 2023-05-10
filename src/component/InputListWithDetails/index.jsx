@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 function InputListWithDetails({ type, total, setTotal }) {
   const [list, setList] = useState([]);
@@ -20,11 +20,31 @@ function InputListWithDetails({ type, total, setTotal }) {
     });
     setTotal(sum);
   }, [list]);
+  const clearListItem = useCallback(
+    (ind) => {
+      const tempList = [...list];
+      tempList.splice(ind, 1);
+      setList(tempList);
+    },
+    [list]
+  );
   const listUI = useMemo(() => {
     return (
       <ul className="list-ui-container">
-        {list.map(({ item, comment }) => {
-          return <li>{`${item} - ${comment}`}</li>;
+        {list.map(({ item, comment }, index) => {
+          return (
+            <li key={`${item} - ${index}`}>
+              <span>{`${item} - ${comment}`}</span>
+              <button
+                style={{ padding: "4px" }}
+                onClick={() => {
+                  clearListItem(index);
+                }}
+              >
+                X
+              </button>
+            </li>
+          );
         })}
       </ul>
     );

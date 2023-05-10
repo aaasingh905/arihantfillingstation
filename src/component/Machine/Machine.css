@@ -72,7 +72,10 @@
 }
 .list-ui-container li {
   min-width: 70px;
-  padding: 4px;
+  padding: 4px;  
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   border: 1px solid grey;
   background: rgb(253, 252, 252);
   text-align: center;

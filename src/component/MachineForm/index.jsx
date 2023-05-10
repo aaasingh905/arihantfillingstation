@@ -96,8 +96,8 @@ function MachineForm({ fuelType, sale, price, setSale, setPrice }) {
         />
       </div>
       <div className="sale-description">
-        <span>{`Total ${fuelType} Sale: ${sale} Ltrs`}</span>
-        <span>{`Total Price: Rs ${price}`}</span>
+        <span>{`${fuelType} Sale: ${parseFloat(sale).toFixed(2)} Ltrs`}</span>
+        <span>{`Price: Rs ${parseFloat(price).toFixed(2)}`}</span>
       </div>
     </>
   );
