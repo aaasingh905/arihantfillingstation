@@ -1,27 +1,43 @@
-import { TextField } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import CustomTextField from "../CustomTextField";
+import { DataContext } from "../../store";
+// import useStore from "../../store";
 
-function MachineForm({ fuelType, sale, price, setSale, setPrice }) {
-  const [closingBalanceMs, setClosingBalanceMs] = useState();
-  const [openingBalanceMs, setOpeningBalanceMs] = useState();
-  const [tankerMs, setTankerMs] = useState();
-  const [msPrice, setMsPrice] = useState();
-
+function MachineForm({
+  fuelType,
+  sale,
+  price,
+  setSale,
+  setPrice,
+  shift,
+  machine,
+}) {
+  // const [closingBalanceMs, setClosingBalanceMs] = useState();
+  // const [openingBalanceMs, setOpeningBalanceMs] = useState();
+  // const [tankerMs, setTankerMs] = useState();
+  // const [msPrice, setMsPrice] = useState();
+  const { data, updateData, updatePrice } = useContext(DataContext);
+  const openingBalanceMs =
+    data?.[shift]?.[machine]?.[`openingBalance${fuelType}`];
+  const closingBalanceMs =
+    data?.[shift]?.[machine]?.[`closingBalance${fuelType}`];
+  const tankerMs = data?.[shift]?.[machine]?.[`tanker${fuelType}`];
+  const msPrice = data?.[shift]?.[`price${fuelType}`];
   const calculateMsTotal = useCallback(() => {
     if (closingBalanceMs && openingBalanceMs && msPrice) {
       const total = (closingBalanceMs - openingBalanceMs - tankerMs) * msPrice;
-      setPrice(total);
+      updateData(shift, machine, `totalPrice${fuelType}`, total);
     } else {
-      setPrice(0.0);
+      updateData(shift, machine, `totalPrice${fuelType}`, 0.0);
     }
   }, [closingBalanceMs, openingBalanceMs, msPrice, tankerMs]);
   const calculateTotalSale = useCallback(() => {
     if (closingBalanceMs && openingBalanceMs) {
       const tanker = tankerMs > 0 ? tankerMs : 0;
       const total = closingBalanceMs - openingBalanceMs - tanker;
-      setSale(total);
+      updateData(shift, machine, `totalSale${fuelType}`, total);
     } else {
-      setSale(0.0);
+      updateData(shift, machine, `totalSale${fuelType}`, 0.0);
     }
   }, [closingBalanceMs, openingBalanceMs, tankerMs]);
   useEffect(() => {
@@ -39,65 +55,86 @@ function MachineForm({ fuelType, sale, price, setSale, setPrice }) {
   return (
     <>
       <div className="machine-balance-input">
-        <TextField
+        <CustomTextField
           required
           id="closing-balance-ms"
           label={`Closing Balance ${fuelType}`}
-          value={closingBalanceMs}
+          value={data?.[shift]?.[machine]?.[`closingBalance${fuelType}`]}
           onChange={(e) => {
-            setClosingBalanceMs(e?.target?.value);
-            console.log(closingBalanceMs);
+            updateData(
+              shift,
+              machine,
+              `closingBalance${fuelType}`,
+              parseFloat(e?.target?.value)
+            );
           }}
           type="number"
           InputLabelProps={{
             shrink: true,
           }}
         />
-        <TextField
+        <CustomTextField
           required
           id="opening-balance-ms"
           label={`Opening Balance ${fuelType}`}
-          value={openingBalanceMs}
+          value={data?.[shift]?.[machine]?.[`openingBalance${fuelType}`]}
           onChange={(e) => {
-            setOpeningBalanceMs(e?.target?.value);
-            console.log(openingBalanceMs);
+            updateData(
+              shift,
+              machine,
+              `openingBalance${fuelType}`,
+              parseFloat(e?.target?.value)
+            );
           }}
           type="number"
           InputLabelProps={{
             shrink: true,
           }}
         />
-        <TextField
+        <CustomTextField
           id="tanker-ms"
           label={`Tanker ${fuelType}`}
-          value={tankerMs}
+          value={data?.[shift]?.[machine]?.[`tanker${fuelType}`]}
           onChange={(e) => {
-            setTankerMs(e?.target?.value);
-            console.log(tankerMs);
+            updateData(
+              shift,
+              machine,
+              `tanker${fuelType}`,
+              parseFloat(e?.target?.value)
+            );
           }}
           type="number"
           InputLabelProps={{
             shrink: true,
           }}
         />
-        <TextField
-          required
-          id="price-ms"
-          label={`Price ${fuelType}`}
-          value={msPrice}
-          onChange={(e) => {
-            setMsPrice(e?.target?.value);
-            console.log(msPrice);
-          }}
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+        {
+          <CustomTextField
+            required
+            id="price-ms"
+            label={`Price ${fuelType}`}
+            value={
+              data?.[shift]?.[`price${fuelType}`] > 0
+                ? data?.[shift]?.[`price${fuelType}`]
+                : ""
+            }
+            onChange={(e) => {
+              updatePrice(shift, `price${fuelType}`, e?.target?.value);
+            }}
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        }
       </div>
       <div className="sale-description">
-        <span>{`${fuelType} Sale: ${parseFloat(sale).toFixed(2)} Ltrs`}</span>
-        <span>{`Price: Rs ${parseFloat(price).toFixed(2)}`}</span>
+        <span>{`${fuelType} Sale: ${parseFloat(
+          data?.[shift]?.[machine]?.[`totalSale${fuelType}`]
+        ).toFixed(2)} Ltrs`}</span>
+        <span>{`Price: Rs ${parseFloat(
+          data?.[shift]?.[machine]?.[`totalPrice${fuelType}`]
+        ).toFixed(2)}`}</span>
       </div>
     </>
   );

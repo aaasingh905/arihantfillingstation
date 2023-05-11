@@ -1,13 +1,25 @@
-import { TextField } from "@mui/material";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import CustomTextField from "../CustomTextField";
+import { DataContext } from "../../store";
 
-function InputListWithDetails({ type, total, setTotal }) {
-  const [list, setList] = useState([]);
+function InputListWithDetails({ type, total, shift, machine }) {
+  // const [list, setList] = useState([]);
+  const { data, updateData } = useContext(DataContext);
+  const list = data?.[shift]?.[machine]?.[`list${type}`];
   const [listItem, setListItem] = useState(0);
   const [comment, setComment] = useState("");
   const handleKeyPressEvent = (event) => {
     if (event.key === "Enter" && listItem > 0 && comment) {
-      setList([...list, { item: parseFloat(listItem), comment: comment }]);
+      updateData(shift, machine, `list${type}`, [
+        ...list,
+        { item: parseFloat(listItem), comment: comment },
+      ]);
       setListItem(0);
       setComment("");
     }
@@ -15,16 +27,15 @@ function InputListWithDetails({ type, total, setTotal }) {
   useEffect(() => {
     let sum = 0;
     list.forEach(({ item }) => {
-      console.log(item);
       sum = sum + item;
     });
-    setTotal(sum);
+    updateData(shift, machine, `total${type}`, sum);
   }, [list]);
   const clearListItem = useCallback(
     (ind) => {
       const tempList = [...list];
       tempList.splice(ind, 1);
-      setList(tempList);
+      updateData(shift, machine, `list${type}`, tempList);
     },
     [list]
   );
@@ -52,7 +63,7 @@ function InputListWithDetails({ type, total, setTotal }) {
   return (
     <div className="list-main">
       <div className="list-container">
-        <TextField
+        <CustomTextField
           required
           id="list-input"
           label={`Enter ${type} list`}
@@ -65,7 +76,7 @@ function InputListWithDetails({ type, total, setTotal }) {
             shrink: true,
           }}
         />
-        <TextField
+        <CustomTextField
           required
           id="list-input"
           label={`Enter Name`}

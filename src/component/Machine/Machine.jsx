@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./Machine.css";
 import MachineForm from "../MachineForm";
 import InputList from "../InputList";
 import InputListWithDetails from "../InputListWithDetails";
+import { DataContext } from "../../store";
 
-function Machine({ number }) {
-  const [totalSpending, setTotalSpending] = useState(0.0);
-  const [totalPaytm, setTotalPaytm] = useState(0.0);
-  const [totalBorrowing, setTotalBorrowing] = useState(0.0);
-  const [totalDeposits, setTotalDeposits] = useState(0.0);
-  const [totalMsSale, setTotalMsSale] = useState(0.0);
-  const [totalMsPrice, setTotalMsPrice] = useState(0.0);
-  const [totalHsdSale, setTotalHsdSale] = useState(0.0);
-  const [totalHsdPrice, setTotalHsdPrice] = useState(0.0);
-  const [totalDue, setTotalDue] = useState(0.0);
+function Machine({ machine, shift }) {
+  const { data, updateData } = useContext(DataContext);
+  const totalMsPrice = data?.[shift]?.[machine]?.["totalPriceMS"];
+  const totalHsdPrice = data?.[shift]?.[machine]?.["totalPriceHSD"];
+  const totalBorrowing = data?.[shift]?.[machine]?.["totalBorrowings"];
+  const totalDeposits = data?.[shift]?.[machine]?.["totalDeposits"];
+  const totalPaytm = data?.[shift]?.[machine]?.["totalPaytm"];
+  const totalSpending = data?.[shift]?.[machine]?.["totalSpendings"];
+  const totalDue = data?.[shift]?.[machine]?.["totalDue"];
   const calculateTotalDue = useCallback(() => {
     const total =
       totalMsPrice +
@@ -22,7 +22,7 @@ function Machine({ number }) {
       totalDeposits -
       totalPaytm -
       totalSpending;
-    setTotalDue(total);
+    updateData(shift, machine, "totalDue", total);
   }, [
     totalBorrowing,
     totalDeposits,
@@ -34,25 +34,19 @@ function Machine({ number }) {
   useEffect(() => {
     calculateTotalDue();
   }, [calculateTotalDue]);
-  const formatDate = () => {
-    let date = new Date();
-    const day = date.toLocaleString("default", { day: "2-digit" });
-    const month = date.toLocaleString("default", { month: "short" });
-    const year = date.toLocaleString("default", { year: "numeric" });
-    return day + "-" + month + "-" + year;
-  };
+
   return (
     <div className="machine-main-container">
       <div className="machine-heading">
         <span
           style={{ fontSize: "24px", fontStyle: "italic", fontWeight: "bold" }}
         >
-          Machine {number}
+          {machine.includes("1") ? "Machine 1" : "Machine 2"}
         </span>
         <span
           style={{ fontSize: "24px", fontStyle: "italic", fontWeight: "bold" }}
         >
-          {formatDate()}
+          {data?.date}
         </span>
         <span
           style={{ fontSize: "24px", fontStyle: "italic", fontWeight: "bold" }}
@@ -61,48 +55,53 @@ function Machine({ number }) {
         </span>
       </div>
       <MachineForm
-        key={`MS-${number}`}
+        key={`MS-${machine}`}
         fuelType={"MS"}
-        sale={totalMsSale}
         price={totalMsPrice}
-        setSale={setTotalMsSale}
-        setPrice={setTotalMsPrice}
+        machine={machine}
+        shift={shift}
       />
       <MachineForm
-        key={`HSD-${number}`}
+        key={`HSD-${machine}`}
         fuelType={"HSD"}
-        sale={totalHsdSale}
         price={totalHsdPrice}
-        setSale={setTotalHsdSale}
-        setPrice={setTotalHsdPrice}
+        machine={machine}
+        shift={shift}
       />
       <div className="sale-description">
-        <span>{`Total Price : ${totalHsdPrice + totalMsPrice}`}</span>
+        <span>{`Total Price : ${parseFloat(
+          data?.[shift]?.[machine]?.[`totalPriceHSD`] +
+            data?.[shift]?.[machine]?.[`totalPriceMS`]
+        ).toFixed(2)}`}</span>
       </div>
       <InputList
-        key={`paytm-${number}`}
+        key={`paytm-${machine}`}
         type={"Paytm"}
         total={totalPaytm}
-        setTotal={setTotalPaytm}
+        machine={machine}
+        shift={shift}
       />
       <InputListWithDetails
-        key={`borrowings-${number}`}
+        key={`borrowings-${machine}`}
         type={"Borrowings"}
         total={totalBorrowing}
-        setTotal={setTotalBorrowing}
+        machine={machine}
+        shift={shift}
       />
 
       <InputListWithDetails
-        key={`spendings-${number}`}
+        key={`spendings-${machine}`}
         type={"Spendings"}
         total={totalSpending}
-        setTotal={setTotalSpending}
+        machine={machine}
+        shift={shift}
       />
       <InputList
-        key={`deposits-${number}`}
+        key={`deposits-${machine}`}
         type={"Deposits"}
         total={totalDeposits}
-        setTotal={setTotalDeposits}
+        machine={machine}
+        shift={shift}
       />
     </div>
   );

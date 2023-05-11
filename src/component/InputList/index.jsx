@@ -1,25 +1,35 @@
-import { TextField } from "@mui/material";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import CustomTextField from "../CustomTextField";
+import { DataContext } from "../../store";
 
-function InputList({ type, total, setTotal }) {
-  const [list, setList] = useState([]);
+function InputList({ type, total, shift, machine }) {
   const [listItem, setListItem] = useState(0);
+  const { data, updateData } = useContext(DataContext);
+  const list = data?.[shift]?.[machine]?.[`list${type}`];
   const handleKeyPressEvent = (event) => {
     if (event.key === "Enter") {
-      setList([...list, parseFloat(event?.target?.value)]);
+      updateData(shift, machine, `list${type}`, [
+        ...list,
+        parseFloat(event?.target?.value),
+      ]);
       setListItem(0);
     }
   };
   useEffect(() => {
     const sum = list.reduce((partialSum, a) => partialSum + a, 0);
-    setTotal(sum);
+    updateData(shift, machine, `total${type}`, sum);
   }, [list]);
   const clearListItem = useCallback(
     (ind) => {
       const tempList = [...list];
       tempList.splice(ind, 1);
-      console.log(">>>>>", ind, tempList);
-      setList(tempList);
+      updateData(shift, machine, `list${type}`, tempList);
     },
     [list]
   );
@@ -47,7 +57,7 @@ function InputList({ type, total, setTotal }) {
   return (
     <div className="list-main">
       <div className="list-container">
-        <TextField
+        <CustomTextField
           required
           id="list-input"
           label={`Enter ${type} list`}
