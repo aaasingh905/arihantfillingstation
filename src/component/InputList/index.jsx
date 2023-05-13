@@ -39,9 +39,15 @@ function InputList({ type, total, shift, machine }) {
         {list.map((ele, index) => {
           return (
             <li key={`${ele} - ${index}`}>
-              <span>{ele}</span>
+              <span style={{ fontWeight: "600" }}>{ele}</span>
               <button
-                style={{ padding: "4px" }}
+                style={{
+                  padding: "8px",
+                  border: "none",
+                  background: "#023047",
+                  borderRadius: "8px",
+                  color: "#fff",
+                }}
                 onClick={() => {
                   clearListItem(index);
                 }}
@@ -73,7 +79,7 @@ function InputList({ type, total, shift, machine }) {
             shrink: true,
           }}
         />
-        <span className="list-header">{`${type} Total : ${total}`}</span>
+        {/* <span className="list-header">{`${type} Total : ${total}`}</span> */}
       </div>
       {listUI}
     </div>

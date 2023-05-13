@@ -45,9 +45,17 @@ function InputListWithDetails({ type, total, shift, machine }) {
         {list.map(({ item, comment }, index) => {
           return (
             <li key={`${item} - ${index}`}>
-              <span>{`${item} - ${comment}`}</span>
+              <span
+                style={{ fontWeight: "600", paddingRight: "10px" }}
+              >{`${item} - ${comment}`}</span>
               <button
-                style={{ padding: "4px" }}
+                style={{
+                  padding: "8px",
+                  border: "none",
+                  background: "#023047",
+                  borderRadius: "8px",
+                  color: "#fff",
+                }}
                 onClick={() => {
                   clearListItem(index);
                 }}
@@ -91,7 +99,7 @@ function InputListWithDetails({ type, total, shift, machine }) {
             shrink: true,
           }}
         />
-        <span className="list-header">{`${type} Total : ${total}`}</span>
+        {/* <span className="list-header">{`${type} Total : ${total}`}</span> */}
       </div>
       {listUI}
     </div>

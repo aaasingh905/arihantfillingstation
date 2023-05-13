@@ -5,8 +5,19 @@ import { TextField } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiInputBase-input": {
-      padding: "10px  12px 8px 12px", // customize padding here
+      padding: "10px  12px 8px 12px",
+      marginRight: "15px",
     },
+    // customize padding here
+    "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button":
+      {
+        "-webkit-appearance": "none",
+        marginRight: "10px",
+      },
+    "& .MuiFormControl-root": {
+      marginRight: "50px !important",
+    },
+    marginRight: "10px",
   },
 }));
 

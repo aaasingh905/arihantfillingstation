@@ -128,14 +128,14 @@ function MachineForm({
           />
         }
       </div>
-      <div className="sale-description">
+      {/* <div className="sale-description">
         <span>{`${fuelType} Sale: ${parseFloat(
           data?.[shift]?.[machine]?.[`totalSale${fuelType}`]
         ).toFixed(2)} Ltrs`}</span>
         <span>{`Price: Rs ${parseFloat(
           data?.[shift]?.[machine]?.[`totalPrice${fuelType}`]
         ).toFixed(2)}`}</span>
-      </div>
+      </div> */}
     </>
   );
 }

@@ -5,7 +5,7 @@ const DataContext = createContext({});
 
 const DataProvider = ({ children }) => {
   const [data, setData] = useState({
-    date: formatDate(),
+    date: new Date(),
     shift1: {
       priceMS: 0.0,
       priceHSD: 0.0,
@@ -53,8 +53,8 @@ const DataProvider = ({ children }) => {
       },
     },
     shift2: {
-      hsdPrice: 95.0,
-      msPrice: 108.0,
+      priceHSD: 95.0,
+      priceMS: 108.0,
       machine1: {
         openingBalanceHSD: 0.0,
         closingBalanceHSD: 0.0,
@@ -115,6 +115,18 @@ const DataProvider = ({ children }) => {
     });
   };
 
+  const updateStore = (value) => {
+    setData(() => value);
+  };
+
+  const updateDate = (value) => {
+    setData((prevState) => {
+      return {
+        ...prevState,
+        date: value,
+      };
+    });
+  };
   const updatePrice = (shift, key, value) => {
     setData((prevState) => {
       return {
@@ -127,7 +139,13 @@ const DataProvider = ({ children }) => {
     });
   };
 
-  const contextValue = { data, updateData, updatePrice };
+  const contextValue = {
+    data,
+    updateData,
+    updatePrice,
+    updateDate,
+    updateStore,
+  };
 
   return (
     <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
