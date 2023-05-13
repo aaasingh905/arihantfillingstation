@@ -61,7 +61,7 @@ export default function FullWidthGrid() {
   ];
   const saveRecord = () => {
     axios
-      .post("https://arihant-filling-station-be.onrender.com/shiftdata", data)
+      .post("https://arihant-filling-station-be.onrender.com/shifts", data)
       .then((res) => {
         console.log(res);
       });

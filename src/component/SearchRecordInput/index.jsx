@@ -11,7 +11,9 @@ const SearchRecordInput = ({ setLoading, loading }) => {
     console.log(tempDate);
     if (tempDate) {
       axios
-        .get(`http://localhost:1333/shiftdata/${tempDate}`)
+        .get(
+          `https://arihant-filling-station-be.onrender.com/shiftdata/${tempDate}`
+        )
         .then((res) => {
           if (res.status === 200) {
             updateStore(res.data);
