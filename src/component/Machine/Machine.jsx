@@ -1,10 +1,9 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import "./Machine.css";
 import MachineForm from "../MachineForm";
 import InputList from "../InputList";
 import InputListWithDetails from "../InputListWithDetails";
 import { DataContext } from "../../store";
-import axios from "axios";
 import { formatDate } from "../../utils";
 
 function Machine({ machine, shift }) {
@@ -15,9 +14,7 @@ function Machine({ machine, shift }) {
   const totalDeposits = data?.[shift]?.[machine]?.["totalDeposits"];
   const totalPaytm = data?.[shift]?.[machine]?.["totalPaytm"];
   const totalSpending = data?.[shift]?.[machine]?.["totalSpendings"];
-  const totalDue = data?.[shift]?.[machine]?.["totalDue"];
-  const totalDue1 = data?.[shift]?.["machine1"]?.["totalDue"];
-  const totalDue2 = data?.[shift]?.["machine2"]?.["totalDue"];
+
   const calculateTotalDue = useCallback(() => {
     const total =
       totalMsPrice +
@@ -35,16 +32,9 @@ function Machine({ machine, shift }) {
     totalPaytm,
     totalSpending,
   ]);
-  console.log(formatDate());
   useEffect(() => {
     calculateTotalDue();
   }, [calculateTotalDue]);
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:1333/shifts", data)
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   return (
     <div className="machine-main-container">
@@ -97,29 +87,6 @@ function Machine({ machine, shift }) {
         machine={machine}
         shift={shift}
       />
-      {/* <div className="machine-heading"> */}
-      {/* <span
-          style={{ fontSize: "24px", fontStyle: "italic", fontWeight: "bold" }}
-        >
-          {machine.includes("1") ? "Machine 1" : "Machine 2"}
-        </span>
-        <span
-          style={{ fontSize: "24px", fontStyle: "italic", fontWeight: "bold" }}
-        >
-          {data?.date}
-        </span> */}
-      {/* <span
-          style={{ fontSize: "20px", fontStyle: "italic", fontWeight: "bold" }}
-        >
-          Due: {parseFloat(totalDue).toFixed(2)}
-        </span>
-        <span
-          style={{ fontSize: "20px", fontStyle: "italic", fontWeight: "bold" }}
-        >
-          {"Due (Machine 1 + Machine 2)"}:{" "}
-          {parseFloat(totalDue1 + totalDue2).toFixed(2)}
-        </span>
-      </div> */}
     </div>
   );
 }

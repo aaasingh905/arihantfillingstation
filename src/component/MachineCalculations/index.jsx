@@ -17,12 +17,18 @@ function MachineCalculations({ shift, machine }) {
     <div className="machine-calculations-container">
       <div className="total-fuel-calculations-container">
         <div className="total-fuel-calculations">
-          <span>Total MS Sale: {totalSaleMS} litres</span>
-          <span>Total MS Price: Rs {totalPriceMS}</span>
+          <span>
+            Total MS Sale: {parseFloat(totalSaleMS).toFixed(2)} litres
+          </span>
+          <span>Total MS Price: Rs {parseFloat(totalPriceMS).toFixed(2)}</span>
         </div>
         <div className="total-fuel-calculations">
-          <span>Total HSD Sale: {totalSaleHSD} litres</span>
-          <span>Total HSD Price: Rs {totalPriceHSD}</span>
+          <span>
+            Total HSD Sale: {parseFloat(totalSaleHSD).toFixed(2)} litres
+          </span>
+          <span>
+            Total HSD Price: Rs {parseFloat(totalPriceHSD).toFixed(2)}
+          </span>
         </div>
       </div>
       <div className="total-fuel-calculations-container-sub">
@@ -114,12 +120,8 @@ function MachineCalculations({ shift, machine }) {
         <span className="highlight-totals">
           Rs{" "}
           {parseFloat(
-            totalPriceHSD +
-              totalPriceMS -
-              totalPaytm -
-              totalBorrowings -
-              totalSpendings -
-              totalDeposits
+            data?.[shift]?.["machine1"]?.totalDue +
+              data?.[shift]?.["machine2"]?.totalDue
           ).toFixed(2)}
         </span>
       </div>

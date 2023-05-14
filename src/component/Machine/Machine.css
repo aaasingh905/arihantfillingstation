@@ -72,16 +72,18 @@
 }
 .list-ui-container li {
   min-width: 90px;
-  padding: 8px;  
+  padding: 0px 8px;
+  padding-right: 0px ;  
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-content: center;
   border-radius: 12px;
   background: #06d6a0;
   text-align: center;
   box-sizing: border-box;
   margin-right: 6px;
   font-size: 16px;
+  margin-bottom: 6px;
 }
 
 

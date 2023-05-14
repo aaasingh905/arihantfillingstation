@@ -46,15 +46,17 @@ function InputListWithDetails({ type, total, shift, machine }) {
           return (
             <li key={`${item} - ${index}`}>
               <span
-                style={{ fontWeight: "600", paddingRight: "10px" }}
+                style={{ fontWeight: "600", padding: "6px" }}
               >{`${item} - ${comment}`}</span>
               <button
                 style={{
                   padding: "8px",
                   border: "none",
                   background: "#023047",
-                  borderRadius: "8px",
+                  borderTopRightRadius: "12px",
+                  borderBottomRightRadius: "12px",
                   color: "#fff",
+                  fontWeight: "600",
                 }}
                 onClick={() => {
                   clearListItem(index);
