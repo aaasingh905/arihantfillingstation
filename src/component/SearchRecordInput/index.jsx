@@ -4,15 +4,14 @@ import axios from "axios";
 import "./index.css";
 import { useContext } from "react";
 import { DataContext } from "../../store";
-import { initialData, urlDev } from "../../constants";
+import { initialData, urlProd } from "../../constants";
 const SearchRecordInput = ({ setLoading, loading }) => {
   const { updateStore } = useContext(DataContext);
   const onChange = (date, dateString) => {
     const tempDate = formatDate(dateString);
-    console.log(tempDate);
     if (tempDate) {
       axios
-        .get(`${urlDev}/shiftdata/${tempDate}`)
+        .get(`${urlProd}/shiftdata/${tempDate}`)
         .then((res) => {
           if (res.status === 200) {
             updateStore(res.data);
@@ -21,11 +20,9 @@ const SearchRecordInput = ({ setLoading, loading }) => {
             updateStore({ ...initialData, date: res.data.date });
           }
           setLoading(false);
-          console.log(res);
         })
         .catch((err) => {
           setLoading(false);
-          console.log(err);
         });
     } else {
       setLoading(true);

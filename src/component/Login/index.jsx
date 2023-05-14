@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./index.css";
 import { Button, Form, Input } from "antd";
 import axios from "axios";
-import { urlDev } from "../../constants";
+import { urlProd } from "../../constants";
 import { UserContext } from "../../store/UserStore";
 import { Navigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function Login() {
   const [error, setError] = useState(false);
   const onFinish = (values) => {
     axios
-      .post(`${urlDev}/login`, {
+      .post(`${urlProd}/login`, {
         username: values.username,
         password: values.password,
       })
