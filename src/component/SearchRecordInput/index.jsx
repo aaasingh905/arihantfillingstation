@@ -30,7 +30,12 @@ const SearchRecordInput = ({ setLoading, loading }) => {
   };
   return (
     <div className="search-record-container">
-      <DatePicker onChange={onChange} />
+      <span style={{ fontSize: "16px", fontWeight: "500" }}>Enter Date : </span>
+      <DatePicker
+        onChange={onChange}
+        size={"large"}
+        style={{ margin: "10px" }}
+      />
     </div>
   );
 };
