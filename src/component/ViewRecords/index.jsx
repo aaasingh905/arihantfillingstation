@@ -4,9 +4,17 @@ import { Col, Collapse, Row } from "antd";
 import Summary from "../Summary";
 import { UserContext } from "../../store/UserStore";
 import { Navigate } from "react-router-dom";
+import { DataContext } from "../../store";
 
 function ViewRecord() {
   const { Panel } = Collapse;
+  const { data } = useContext(DataContext);
+  const shift1Total = parseFloat(
+    data["shift1"]["machine1"].totalDue + data["shift1"]["machine2"].totalDue
+  ).toFixed(2);
+  const shift2Total = parseFloat(
+    data["shift2"]["machine1"].totalDue + data["shift2"]["machine2"].totalDue
+  ).toFixed(2);
   const [loading, setLoading] = React.useState(true);
   const {
     user: { token },
@@ -29,6 +37,9 @@ function ViewRecord() {
             header={
               <div className="panel-header-details">
                 <span>{"Shift 1"}</span>
+                <span>
+                  TotalDue ( Due Machine1 + Due Machine 2): Rs {shift1Total}
+                </span>
               </div>
             }
             key="shift1"
@@ -46,6 +57,9 @@ function ViewRecord() {
             header={
               <div className="panel-header-details">
                 <span>{"Shift 2"}</span>
+                <span>
+                  Total Due ( Due Machine1 + Due Machine 2): Rs {shift2Total}
+                </span>
               </div>
             }
             key="shift2"

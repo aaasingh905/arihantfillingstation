@@ -23,3 +23,12 @@
     align-items: center;
     font-weight: 600;
 }
+
+.total-fuel-calculations-container-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}

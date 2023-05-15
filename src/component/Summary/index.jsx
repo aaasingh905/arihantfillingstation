@@ -64,10 +64,7 @@ function Summary({ machine, shift }) {
   }, []);
   return (
     <div className="summary-main-container">
-      <div className="total-fuel-calculations-container">
-        <div className="total-fuel-calculations">
-          <span>{shift === "shift1" ? "Shift 1" : "Shift 2"}</span>
-        </div>
+      <div className="total-fuel-calculations-container-1">
         <div className="total-fuel-calculations">
           <span>{machine === "machine1" ? "Machine 1" : "Machine 2"}</span>
         </div>
@@ -160,7 +157,7 @@ function Summary({ machine, shift }) {
         </Panel>
       </Collapse>
       <div className="total-fuel-calculations-container">
-        <span>{"Total Due : "}</span>
+        <span>{"Due : "}</span>
         <span className="highlight-totals">
           Rs {parseFloat(totalDue).toFixed(2)}
         </span>
