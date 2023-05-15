@@ -4,10 +4,11 @@ import axios from "axios";
 import "./index.css";
 import { useContext } from "react";
 import { DataContext } from "../../store";
-import { urlProd } from "../../constants";
+import { initialData, urlProd } from "../../constants";
 const SearchRecordInput = ({ setLoading, loading }) => {
   const { updateStore, updateDate } = useContext(DataContext);
   const onChange = (date, dateString) => {
+    updateStore(initialData);
     const tempDate = formatDate(dateString);
     if (tempDate) {
       axios

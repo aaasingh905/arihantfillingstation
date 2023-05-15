@@ -14,6 +14,7 @@ export default function AddRecord() {
   const { user } = React.useContext(UserContext);
   const { token } = user;
   const [loading, setLoading] = React.useState(true);
+  const [saving, setSaving] = React.useState(false);
   const [shift, setShift] = React.useState(1);
   const { data } = React.useContext(DataContext);
   const [success, setSuccess] = React.useState(false);
@@ -65,11 +66,13 @@ export default function AddRecord() {
     },
   ];
   const saveRecord = () => {
+    setSaving(true);
     axios
       .post(`${urlProd}/shifts`, data)
       .then((res) => {
         if (res.status === 201 || res.status === 203) {
           setSuccess(true);
+          setSaving(false);
           setTimeout(() => {
             setSuccess(false);
           }, 3000);
@@ -77,6 +80,7 @@ export default function AddRecord() {
       })
       .catch((err) => {
         setError(true);
+        setSaving(false);
         setTimeout(() => {
           setError(false);
         }, 3000);
@@ -143,7 +147,7 @@ export default function AddRecord() {
                   style={{ float: "right", background: "green" }}
                   icon={<SaveOutlined />}
                   onClick={saveRecord}
-                  disabled={loading}
+                  disabled={saving}
                 >
                   Save
                 </Button>
