@@ -8,7 +8,6 @@ const UserProvider = ({ children }) => {
   });
 
   const updateUserStore = (value) => {
-    console.log(value, ">>>>>>>");
     setUser((prevState) => {
       return { ...prevState, ...value };
     });

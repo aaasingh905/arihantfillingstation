@@ -6,8 +6,7 @@ import { DataContext } from "../../store";
 import Machine from "../Machine/Machine";
 import MachineCalculations from "../MachineCalculations";
 import SearchRecordInput from "../SearchRecordInput";
-import Header from "../Header";
-import { urlDev } from "../../constants";
+import { urlProd } from "../../constants";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../../store/UserStore";
 
@@ -19,7 +18,6 @@ export default function AddRecord() {
   const { data } = React.useContext(DataContext);
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
-  //   console.log(token);
   const tabItems = [
     {
       label: `Machine 1`,
@@ -68,7 +66,7 @@ export default function AddRecord() {
   ];
   const saveRecord = () => {
     axios
-      .post(`${urlDev}/shifts`, data)
+      .post(`${urlProd}/shifts`, data)
       .then((res) => {
         if (res.status === 201 || res.status === 203) {
           setSuccess(true);
@@ -145,6 +143,7 @@ export default function AddRecord() {
                   style={{ float: "right", background: "green" }}
                   icon={<SaveOutlined />}
                   onClick={saveRecord}
+                  disabled={loading}
                 >
                   Save
                 </Button>
