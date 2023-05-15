@@ -4,9 +4,9 @@ import axios from "axios";
 import "./index.css";
 import { useContext } from "react";
 import { DataContext } from "../../store";
-import { initialData, urlProd } from "../../constants";
+import { urlProd } from "../../constants";
 const SearchRecordInput = ({ setLoading, loading }) => {
-  const { updateStore } = useContext(DataContext);
+  const { updateStore, updateDate } = useContext(DataContext);
   const onChange = (date, dateString) => {
     const tempDate = formatDate(dateString);
     if (tempDate) {
@@ -17,7 +17,7 @@ const SearchRecordInput = ({ setLoading, loading }) => {
             updateStore(res.data);
           }
           if (res.status === 201) {
-            updateStore({ ...initialData, date: res.data.date });
+            updateDate(tempDate);
           }
           setLoading(false);
         })
