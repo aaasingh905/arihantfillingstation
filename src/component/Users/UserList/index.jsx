@@ -37,7 +37,7 @@ const UserList = ({ refetch: refetchFlag, setRefetch: setRefetchFlag }) => {
 
   const UserListUI = useCallback(
     (column) => {
-      return (
+      return data?.users?.length > 0 ? (
         <ul className="list-container-user-list">
           <li key="Table-Titles" className="list-headers-user-list">
             <span>Name</span>
@@ -103,6 +103,8 @@ const UserList = ({ refetch: refetchFlag, setRefetch: setRefetchFlag }) => {
             }
           })}
         </ul>
+      ) : (
+        <></>
       );
     },
     [data]
@@ -149,28 +151,30 @@ const UserList = ({ refetch: refetchFlag, setRefetch: setRefetchFlag }) => {
           {data?.users?.length > 15 && UserListUI(2)}
         </Col>
       </Row>
-      <Row>
-        <Col
-          span={24}
-          justify={"center"}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <Button
-            onClick={handleNextPage}
-            disabled={data.page === Math.ceil(data.totalUsers / data.limit)}
-            style={{ background: "#021d2b", color: "#fff" }}
+      {data?.users?.length > 0 && (
+        <Row>
+          <Col
+            span={24}
+            justify={"center"}
+            style={{ display: "flex", justifyContent: "center" }}
           >
-            Next
-          </Button>
-          <Button
-            onClick={handlePreviousPage}
-            disabled={data.page === 1}
-            style={{ background: "#021d2b", color: "#fff" }}
-          >
-            Previous
-          </Button>
-        </Col>
-      </Row>
+            <Button
+              onClick={handleNextPage}
+              disabled={data.page === Math.ceil(data.totalUsers / data.limit)}
+              style={{ background: "#021d2b", color: "#fff" }}
+            >
+              Next
+            </Button>
+            <Button
+              onClick={handlePreviousPage}
+              disabled={data.page === 1}
+              style={{ background: "#021d2b", color: "#fff" }}
+            >
+              Previous
+            </Button>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

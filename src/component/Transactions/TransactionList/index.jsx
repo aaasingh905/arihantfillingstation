@@ -200,28 +200,30 @@ const TransactionList = ({
           {data?.transactions?.length > 15 && TransactionListUI(2)}
         </Col>
       </Row>
-      <Row>
-        <Col
-          span={24}
-          justify={"center"}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <Button
-            onClick={handleNextPage}
-            disabled={data.page === Math.ceil(data.totalUsers / data.limit)}
-            style={{ background: "#021d2b", color: "#fff" }}
+      {data?.transactions?.length > 0 && (
+        <Row>
+          <Col
+            span={24}
+            justify={"center"}
+            style={{ display: "flex", justifyContent: "center" }}
           >
-            Next
-          </Button>
-          <Button
-            onClick={handlePreviousPage}
-            disabled={data.page === 1}
-            style={{ background: "#021d2b", color: "#fff" }}
-          >
-            Previous
-          </Button>
-        </Col>
-      </Row>
+            <Button
+              onClick={handleNextPage}
+              disabled={data.page === Math.ceil(data.totalUsers / data.limit)}
+              style={{ background: "#021d2b", color: "#fff" }}
+            >
+              Next
+            </Button>
+            <Button
+              onClick={handlePreviousPage}
+              disabled={data.page === 1}
+              style={{ background: "#021d2b", color: "#fff" }}
+            >
+              Previous
+            </Button>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };
