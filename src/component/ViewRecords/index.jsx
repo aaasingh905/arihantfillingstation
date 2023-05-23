@@ -5,7 +5,7 @@ import Summary from "../Summary";
 import { UserContext } from "../../store/UserStore";
 import { Navigate } from "react-router-dom";
 import { DataContext } from "../../store";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import GeneratePDF from "../PDFGenerator";
 import { DownloadOutlined } from "@ant-design/icons";
 

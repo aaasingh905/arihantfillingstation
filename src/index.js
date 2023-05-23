@@ -5,15 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { DataProvider } from "./store";
 import { UserProvider } from "./store/UserStore";
-
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <UserProvider>
-      <DataProvider>
-        <App />
-      </DataProvider>
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <DataProvider>
+          <App />
+        </DataProvider>
+      </UserProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

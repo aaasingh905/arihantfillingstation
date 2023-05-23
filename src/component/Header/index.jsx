@@ -23,6 +23,11 @@ function Header() {
                 View Record
               </Link>{" "}
             </li>
+            <li>
+              <Link className="nav-links" to="/users">
+                User Accounts
+              </Link>{" "}
+            </li>
           </ul>
           <div>
             <ul className="nav-list-container">
