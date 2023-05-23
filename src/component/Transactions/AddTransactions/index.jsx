@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import CustomTextField from "../../CustomTextField";
 import { formatDate } from "../../../utils";
 import axios from "axios";
-import { urlDev } from "../../../constants";
+import { urlDev, urlProd } from "../../../constants";
 import TransactionList from "../TransactionList";
 
 function AddTransaction({ userId }) {
@@ -26,7 +26,7 @@ function AddTransaction({ userId }) {
   const addTransaction = () => {
     if (transaction.amount && transaction.date) {
       axios
-        .post(`${urlDev}/addtransactions`, { ...transaction, userId })
+        .post(`${urlProd}/addtransactions`, { ...transaction, userId })
         .then((res) => {
           setTransaction({
             amount: 0,

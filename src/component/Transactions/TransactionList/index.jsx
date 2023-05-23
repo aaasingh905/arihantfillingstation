@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
-import { urlDev } from "../../../constants";
+import { urlDev, urlProd } from "../../../constants";
 import { Button, Col, Row } from "antd";
 import "../index.css";
 const TransactionList = ({
@@ -12,7 +12,7 @@ const TransactionList = ({
   const queryClient = useQueryClient();
   const fetchTransactions = async (page = 1, limit = 20) => {
     const response = await axios.get(
-      `${urlDev}/transactions/${id}?page=${page}&limit=${limit}`
+      `${urlProd}/transactions/${id}?page=${page}&limit=${limit}`
     );
     return response.data;
   };
@@ -47,8 +47,8 @@ const TransactionList = ({
   const TransactionListUI = useCallback(
     (column) => {
       return data?.transactions?.length > 0 ? (
-        <ul className="list-container">
-          <li key="Table-Titles" className="list-headers">
+        <ul className="list-container-transactions">
+          <li key="Table-Titles" className="list-headers-transactions">
             <span>Amount</span>
             <span>Slip</span>
             <span>Date</span>

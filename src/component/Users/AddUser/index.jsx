@@ -2,7 +2,7 @@ import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
 import CustomTextField from "../../CustomTextField";
 import axios from "axios";
-import { urlDev } from "../../../constants";
+import { urlDev, urlProd } from "../../../constants";
 
 function AddUser({ refetch: refetchFlag, setRefetch: setRefetchFlag }) {
   const [user, setUser] = useState({
@@ -18,7 +18,7 @@ function AddUser({ refetch: refetchFlag, setRefetch: setRefetchFlag }) {
   const addUser = () => {
     if (user.name && user.number) {
       axios
-        .post(`${urlDev}/users`, { ...user })
+        .post(`${urlProd}/users`, { ...user })
         .then((res) => {
           setUser({
             name: "",

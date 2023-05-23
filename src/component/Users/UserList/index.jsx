@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
-import { urlDev } from "../../../constants";
+import { urlDev, urlProd } from "../../../constants";
 import { Button, Col, Row } from "antd";
 import { Link } from "react-router-dom";
 import "../index.css";
@@ -10,7 +10,7 @@ const UserList = ({ refetch: refetchFlag, setRefetch: setRefetchFlag }) => {
   const queryClient = useQueryClient();
   const fetchUsers = async (page = 1, limit = 24) => {
     const response = await axios.get(
-      `${urlDev}/getusers?page=${page}&limit=${limit}`
+      `${urlProd}/getusers?page=${page}&limit=${limit}`
     );
     return response.data;
   };
@@ -38,8 +38,8 @@ const UserList = ({ refetch: refetchFlag, setRefetch: setRefetchFlag }) => {
   const UserListUI = useCallback(
     (column) => {
       return (
-        <ul className="list-container">
-          <li key="Table-Titles" className="list-headers">
+        <ul className="list-container-user-list">
+          <li key="Table-Titles" className="list-headers-user-list">
             <span>Name</span>
             <span>Number</span>
             <span>Village</span>

@@ -1,4 +1,4 @@
-.list-container {
+.list-container-transactions {
     list-style: none;
     padding: 0px;
     width: 100%;
@@ -10,7 +10,7 @@
     align-content: center;
     border-radius: 20px;
 }
-.list-headers {
+.list-headers-transactions {
     width: 100%;
     color: #000;
     font-size: 18px;
