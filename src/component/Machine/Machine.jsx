@@ -58,13 +58,7 @@ function Machine({ machine, shift }) {
             data?.[shift]?.[machine]?.[`totalPriceMS`]
         ).toFixed(2)}`}</span>
       </div> */}
-      <InputList
-        key={`paytm-${machine}`}
-        type={"Paytm"}
-        total={totalPaytm}
-        machine={machine}
-        shift={shift}
-      />
+
       <InputListWithDetails
         key={`borrowings-${machine}`}
         type={"Borrowings"}
@@ -84,6 +78,13 @@ function Machine({ machine, shift }) {
         key={`deposits-${machine}`}
         type={"Deposits"}
         total={totalDeposits}
+        machine={machine}
+        shift={shift}
+      />
+      <InputList
+        key={`paytm-${machine}`}
+        type={"Paytm"}
+        total={totalPaytm}
         machine={machine}
         shift={shift}
       />
