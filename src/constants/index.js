@@ -94,5 +94,5 @@ export const initialData = {
   },
 };
 
-export const urlProd = "http://localhost:1333";
-export const urlDev = "https://arihant-filling-station-be.onrender.com";
+export const urlDev = "http://localhost:1333";
+export const urlProd = "https://arihant-filling-station-be.onrender.com";
